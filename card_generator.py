@@ -4,6 +4,9 @@ from numpy import NaN, nan
 import pandas as pd
 import random
 import matplotlib.pyplot as plt
+import plotly
+import plotly.express as px
+import plotly.graph_objects as go
 # random.seed(0)
 
 from static_abilities import StaticAbilities
@@ -94,25 +97,26 @@ def drop_nonvalid_cards(df_cards, drop_cons):
 
 def plot_attribute_distribution(df_cards):
 
-     # figure with 4 subplots
-    fig, axs = plt.subplots(1, 4, figsize=(18, 6))
-    fig.subplots_adjust(top=0.85, left=0.05, right=0.98)
-
     colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
+
+    fig = plotly.subplots.make_subplots(rows=1, cols=4,
+                                        subplot_titles=df_cards.columns[:4])
+    fig.update_layout(title_text=f'Attribute distributions of {len(df_cards)} cards', yaxis_title='# Cards')
+
     for i in range(4):
         bars = df_cards.iloc[:, i].value_counts(normalize=True)
-        axs[i].bar(bars.index, bars.values, color=colors[i])
-        axs[i].set_title(df_cards.columns[i])
-        axs[i].set_ylabel('Probability')
+        fig.append_trace(
+            go.Bar(x=bars.index, y=bars.values, name=df_cards.columns[i], marker_color=colors[i]),
+            row=1, col=i+1
+        )
 
-    fig.suptitle(f'Random card draw of {len(df_cards)} cards', fontsize=16, y=0.98)
-    plt.show()
+    fig.show()
 
 
 if __name__ == '__main__':
 
-    plot = False
-    nb_cards = 100
+    plot = True
+    nb_cards = 1000
     
     # 17 as of now
     nb_encoded_abilites = len(StaticAbilities)
@@ -133,5 +137,6 @@ if __name__ == '__main__':
     df_cards.to_csv('cards.csv')
 
     if plot:
-        plot_attribute_distribution(df_cards)
-    
+        plot_attribute_distribution(df_cards)   
+
+    exit()

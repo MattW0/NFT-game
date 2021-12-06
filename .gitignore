@@ -8,6 +8,7 @@ __pycache__/
 
 Sors/
 *.csv
+*.png
 
 # Distribution / packaging
 .Python
