@@ -1,0 +1,81 @@
+,Price,Power,Toughness,# Abilities,Abilities,Hash
+0,4,2,3,2,"['Trample', 'Intimidate']",e15477fd61441e2245dda417a13685fcfbb5f969222252bec33cfaf310096cbf
+1,3,0,2,2,"['First_Strike', 'Deathtouch']",c4760390dd525b975a2559e7207414d300b87aaac156abd727ec4cc2d59477fa
+2,7,4,1,4,"['Defender', 'Hexproof', 'Indestructible', 'Flash']",d193eed6643a8ddf0116073675838308b9bc2f04368f1c5691563a8bfe59cb15
+3,3,3,1,1,['Indestructible'],a11f1379648e8de2a0087644c5bb5f926d3526af7c3b567534c9857ee0e5add1
+6,8,2,2,3,"['Prowess', 'Trample', 'Protection']",1f7b2f0df347d862de133b199f2a100ca8aec8ec43fed1bb4daf174195153f85
+7,7,0,4,2,"['Intimidate', 'Double_Strike']",1def605ca6ae2a095e1e7b2f562c166ce3022aa2ec50acd56caee1611e164bde
+11,3,1,1,2,"['Intimidate', 'Lifelink']",7040a2d3f975a28016b6ac21a9d24fc2af64e4c9e77e434209b20a3d5beddefd
+12,4,4,1,1,['Flash'],d7333c5eed4ff23a60e649789327888be0caa841174e748a1342dc800419f834
+13,2,2,1,1,['Shroud'],90ab535341f188744c40d4b48d94ab3ed517ec7dc9f77cc422fe0f94b87ba43b
+14,2,4,3,1,['Deathtouch'],3765f925c4314369d573dcd1eedb37242d89138847ce740061bfeca8b1db349e
+15,5,2,1,4,"['Deathtouch', 'First_Strike', 'Shroud', 'Trample']",57f400dbde35dd95498178943af3be8ee86941acba03775a0f23107b9f4b6c18
+16,4,0,3,2,"['Intimidate', 'Hexproof']",9bbf1909fc5bff45e2a999d007dc6124e76b242d68d644ee1ae6a8dc77b16e77
+17,5,0,2,2,"['First_Strike', 'Trample']",939441c12f186fc265a3916dc67271887803962fd810511dc0eacea2cf1b489b
+18,5,4,2,4,"['Protection', 'Indestructible', 'Flash', 'Flying']",afa753883ed34ef02c3f1d473c0c4dcb65fda2e979d9490888893e2e0478db05
+19,4,2,2,4,"['Prowess', 'Menace', 'Intimidate', 'Menace']",a10d982f63fb779f6ae8b72cf10ba95e3979e9caf471545b8eb291c635090b8f
+20,1,2,1,1,['Menace'],9b846aedd2ac23e377ae46c490d847f20befbd368a638c753a7e674360ca7bc8
+21,5,1,1,4,"['Shroud', 'First_Strike', 'Hexproof', 'Flying']",755372d5d615d0e4650fac5852e94c9cad036ebc0745c0878de9670538ad28cb
+22,4,1,5,3,"['First_Strike', 'Flying', 'Menace']",a3032472704261234ff42605952cea4fcdb5f31ed249d6247f7f3b0bcda26aed
+23,2,2,1,1,['Hexproof'],fc0713584bafc2646053cf3cd8eb577c586fc3c82fcdb3a654634471843d4991
+24,5,1,3,3,"['Vigilance', 'Deathtouch', 'Indestructible']",996728ef1149f4009f49208ff0daff18f7e480084a15ea25afda35f427c7adaa
+26,3,1,3,2,"['Flash', 'Hexproof']",29041fa3ada02fe75d816cccd8eb8520a82a9f9a745841d907a4f73dbfe030db
+27,5,2,1,2,"['Shroud', 'Lifelink']",91676b5a1869afdefdaefd6a30a322bfd3e11d867c5d0fa63f0a8b1baf4a3b92
+28,6,0,4,4,"['Flash', 'Trample', 'Protection', 'Indestructible']",2dc28d97c1047d9b692984256beee610f81b7b701b6d0c08e87628a7f462819a
+32,7,3,4,3,"['Shroud', 'Haste', 'Prowess']",2e4af4833ed20fd9b2060d3214e91c1ffaf55f2eaa2795f79f1e23f1c7b35f3c
+33,4,1,3,1,['Haste'],325258279bd34227a61a77a277af6b6c5a90595e26a7c5d919458fb006b31ad8
+34,3,1,4,3,"['Deathtouch', 'Menace', 'Flash']",427e54006229787dc2b5462a5b2ed4f1c30b7674e3722be1d5fef77b88045f3b
+35,6,2,2,4,"['Hexproof', 'Indestructible', 'Double_Strike', 'Reach']",1daa90073d08c2c34a72c0a538c620c0caa2e79a22c702680e21c883cdc014cb
+36,6,1,1,3,"['First_Strike', 'Menace', 'Defender']",62f6a81703b54acde3f9bfa28ca9abee970b01283dcf74c163655c1816ef50e1
+37,3,4,1,1,['Deathtouch'],365e381a70a000346b88391c6fbc7a91d0b6f9bdc59027f8e4aea08a44456c85
+38,5,1,2,2,"['Double_Strike', 'Reach']",394e12b9b06ef69bdee9cecea9aef41f1fb3c9be022eda69b1a84df35f9c2d0e
+39,5,1,2,2,"['Double_Strike', 'Defender']",2c1b6bdddab7de57cbd5ced70214697b2ef45901b2f93b8343e282da421d4e63
+40,3,3,1,1,['First_Strike'],6635fbf61a3c624085319e03d7d3d8fdffc7fe9fb0642da8da485d8a61761b8c
+41,2,2,2,1,['Prowess'],5fd78396aa6c72a7920db9207da24d5dbbcfba44b4387fd5477d283192226f1e
+42,6,1,1,4,"['Haste', 'Hexproof', 'Vigilance', 'Deathtouch']",48f4060751805e6fb8e544e4d911568c5df66200236641e43ef515561a86d3cc
+43,4,0,2,2,"['Lifelink', 'Intimidate']",87c69ad059271c43deb70a8a09b5eba2cc5ae05ba41928c162b688fa4b7175b2
+44,4,1,4,4,"['Lifelink', 'Lifelink', 'Reach', 'Haste']",d079e50af20a9e42533fbb0e23d046242f5bcd960697e62c6444f27a88fe8a20
+45,3,3,5,1,['Hexproof'],293426a2193fbb95f8dd6b8fa9253fc1cba55807232de914c6eb55dc714bc3d9
+46,3,2,3,1,['Trample'],a167293662584d664bdf16151033a164e52bce658dedb427cf6e47f9a77b9e5b
+47,3,2,2,2,"['First_Strike', 'Deathtouch']",53177b03f95a363f6f7800908c9ea9e62eb28fcb7ed748cc4a6da32ff6e37086
+48,3,3,1,2,"['Defender', 'Double_Strike']",96b5e0d4f28c0133dca2f24d698c8802876465aebc351338b8e3eabac6d5692f
+50,4,3,2,2,"['Indestructible', 'Shroud']",b1157133c46568082fea249718dcddbd83c1d1f8474737b2fbee7e0fcad93f70
+51,5,1,4,3,"['Hexproof', 'Lifelink', 'First_Strike']",2e077813d74ab30aaf55a979a1434e806219268c03d4262435b185b0ea518d9e
+52,4,2,4,3,"['Trample', 'Indestructible', 'Menace']",61afd2d6bcd1107725e98bf3613b0823178a29b6370b61faddda5ddf2166efe0
+53,1,5,2,1,['Defender'],7f33e5e72c018a8db27f99bcd62de49a36fbccace6aa3dfb556c8f443b53e73d
+54,3,1,2,2,"['Vigilance', 'Double_Strike']",1d4690974de08a2b8046876fd95e1182aec17d262002bb38db42bacba7c9d17c
+55,5,3,2,2,"['First_Strike', 'Intimidate']",4daaf3bc5a33cf22d096531af9dba023378c1f03a0b90986ee18973deab54871
+56,3,3,1,3,"['Vigilance', 'Defender', 'Lifelink']",8af3f1ef7e857448c42dc911b87bd7f75137fb4753398aaaf77a8f7d3dc9010a
+57,5,2,3,3,"['Shroud', 'Intimidate', 'Indestructible']",5950848e3df81c9929ed7bf8ef94d7490f7e094efb4d5508ac291d263b91cc64
+58,4,4,2,4,"['Lifelink', 'Reach', 'Lifelink', 'Indestructible']",3f32a780503c0a0ec90af6822eb13a216e9f4c8363d65ae4a9c15f44cf0854bf
+59,3,0,2,0,[],45aa15cc1bad409cdfe22ae66f7ff89443afbe48c4d3e55347c8c52cd5d08918
+60,2,1,1,1,['Intimidate'],fc7eb47cfa16fa578038b974ea82ce6afd73234aa8b8f28e8d4d6a9309e9a0c3
+61,5,1,1,0,[],8b9c9b8119ae3ff4621cb98daf8322f914bca069b0b2fb1690ac69177cf4bec5
+62,3,3,1,3,"['Shroud', 'Menace', 'Defender']",dd9cef7f9f680fa7207e0b01d4b83abbed69ed61d9c24ac1312f9d9bf5563d80
+63,3,1,2,3,"['Menace', 'Double_Strike', 'Protection']",8e6d45c3619b28b940650b802d4f91dcdf027681bced0cf07e3aa4daa65bf29c
+64,2,1,1,0,[],1871bfc59267bffc378213c0eabdd4e965639573d87d5847d450f0cd7c9d2db4
+65,1,1,3,1,['Defender'],dbc801a724542e39deeb8646df802a72b1fde5505676fcbc4dad64ec83fcd1d5
+66,4,3,1,2,"['Hexproof', 'Haste']",14a6b4e76ebe9c3e96c593fcd09853582e8fdac56e2014c467e00738e840063f
+67,4,2,2,2,"['Double_Strike', 'Prowess']",e044b522db6a71db2f51889a1aec58cf475870027832ceab52910d32945d8816
+68,4,2,2,2,"['Prowess', 'Flash']",df2256bba234eba00ddca851aed78d84e5804904d9c23bb1da8318145dfa2f5c
+71,3,3,1,1,['Hexproof'],b8291ed307ed355948dec6f4b6739b4de89352c23f9369f8bc7d83463c9dbd15
+72,2,1,4,2,"['Trample', 'Haste']",2c30c3a5e71023d36849d8200629cc64229675c046be8e208eef74d83fa35a71
+73,5,3,4,3,"['Flash', 'Hexproof', 'Intimidate']",15cde72bfbdd898a56c7c7b53127d75d2b35a22804ff969e34071c0942487c43
+75,6,0,2,4,"['Protection', 'Protection', 'Hexproof', 'Shroud']",854a0c58520c851329422dadc00767515b9dfc8fd4dda51ddee30f566b4b88c6
+76,4,4,3,2,"['Lifelink', 'Menace']",0aa579752a863298c6d3fd3ba32a1c5b30b71ea8925b61d42f0ba9313b7df9f4
+77,2,3,3,1,['Reach'],9ca97bfc43a9b53729232ecb7f46b53ea3c5e347c26de0187ba78950da9f380e
+78,5,1,4,3,"['Flying', 'Prowess', 'First_Strike']",b640196a05b7c52d878637dbe714d50d2989b825e1034eebd8454df89a4bb622
+79,7,1,3,4,"['Hexproof', 'Defender', 'Menace', 'First_Strike']",fb1ac5072d583e15012dc0fe4353c7585022ba42b3ea50505b0b450342197f30
+80,3,3,2,1,['Shroud'],b55aaba714c70f3b721aae9b4bf73f3bbae85beae2dd53f381a6842cc57cc921
+81,3,2,3,3,"['Vigilance', 'Deathtouch', 'Intimidate']",9611e42d91ae7e6b7af129ebd5a83c988f592ff2007e44d3af970931b2b2a261
+82,2,3,2,1,['Haste'],52ad2b06799f4f9560edf059d9a5d1c87cd224e95f3bd89738c97719dc9133ea
+83,1,0,3,0,[],b5e468f498d9ccec7ab762902c298ad34b2c44686017b680f97e776b7f86eb59
+84,5,0,1,2,"['Hexproof', 'Protection']",18a9f9e45c848383849f91f4d79affb12755f71f88e607a8fe30c0dd478c0c1c
+85,6,2,1,2,"['Indestructible', 'Trample']",f26308529fda913c1eca216ff1bea4121092e4731a89815d7b87971a39a37b4d
+87,5,4,1,4,"['Flash', 'Hexproof', 'First_Strike', 'Double_Strike']",1dd9c38bbd94048f4435e23dd3fb3e216baa46a03c9e98f0940703ab024ee4c3
+88,1,2,1,0,[],2d1dbf9336cd8658b36dd83f8fb364896f64487d71d0fedcb540a0b2df9d959d
+89,6,2,3,1,['Trample'],8918a467d1b8c55e54b2f438256cd21910322a4483fc7216876a2a14ee791e84
+92,5,1,2,3,"['Flying', 'Prowess', 'Deathtouch']",d020f94b4519a9058aef8ab5567a2d2779a3de801b5e0df200e6e6a6a53564b0
+94,3,3,2,2,"['Prowess', 'Lifelink']",4985931934a8c28fb7f8b97ce53c0d9ae97eef22cc0a358023e3a76769cca6b9
+97,5,2,3,2,"['Flying', 'Vigilance']",d36519d62bc13b8ba27f057c2b2cb530a376354071156ae365a0117ffb1c4eb6
+99,6,2,1,4,"['Hexproof', 'Defender', 'Intimidate', 'Flash']",dceb6d98ea6ad107d6fc8367fe1c152c3a01e3cb48459836f8710904805c6bcb

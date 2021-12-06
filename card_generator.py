@@ -3,6 +3,7 @@ import math
 from numpy import NaN, nan
 import pandas as pd
 import random
+import matplotlib.pyplot as plt
 # random.seed(0)
 
 from static_abilities import StaticAbilities
@@ -91,16 +92,34 @@ def drop_nonvalid_cards(df_cards, drop_cons):
     return df_cards
 
 
+def plot_attribute_distribution(df_cards):
+
+     # figure with 4 subplots
+    fig, axs = plt.subplots(1, 4, figsize=(18, 6))
+    fig.subplots_adjust(top=0.85, left=0.05, right=0.98)
+
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
+    for i in range(4):
+        bars = df_cards.iloc[:, i].value_counts(normalize=True)
+        axs[i].bar(bars.index, bars.values, color=colors[i])
+        axs[i].set_title(df_cards.columns[i])
+        axs[i].set_ylabel('Probability')
+
+    fig.suptitle(f'Random card draw of {len(df_cards)} cards', fontsize=16, y=0.98)
+    plt.show()
+
+
 if __name__ == '__main__':
+
+    plot = False
+    nb_cards = 100
     
     # 17 as of now
     nb_encoded_abilites = len(StaticAbilities)
 
     df_encoding = generate_encoding()
-    hashes = generate_hashes(nb_cards=100)
+    hashes = generate_hashes(nb_cards)
     df_cards = build_cards(hashes)
-
-    print('Cards with at least one ability: {}'.format(df_cards[df_cards['# Abilities'] > 0].shape[0]))
 
     # Conditions that make a card non-valid (overpowered/unplayable/whack-ass weak)
     drop_conditions = {'no toughness': df_cards['Toughness'] == 0, 
@@ -111,3 +130,8 @@ if __name__ == '__main__':
 
     print('Remaining cards: {}'.format(df_cards.shape[0]))
     print(df_cards)
+    df_cards.to_csv('cards.csv')
+
+    if plot:
+        plot_attribute_distribution(df_cards)
+    
