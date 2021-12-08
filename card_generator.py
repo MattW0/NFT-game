@@ -7,20 +7,28 @@ import matplotlib.pyplot as plt
 import plotly
 import plotly.express as px
 import plotly.graph_objects as go
-# random.seed(0)
 
-from static_abilities import StaticAbilities
+from Encodings.keyword_abilities import KeywordAbilities
+from Encodings.special_abilities import SpecialAbilities
+from Encodings.ability_triggers import AbilityTriggers
 
 # TODO: card name, artwork, mana/money cost, special abilities
 
 
-def generate_encoding():
+def generate_encodings():
     # Card ability encodings
     df = pd.DataFrame(columns=['Hex', 'Ability'])
     ids = [x for x in range(256)]
     hexs = [hex(x) for x in ids]
     df['Hex'] = hexs
-    df['Ability'] = pd.Series([e.name for e in StaticAbilities])
+    df['Keyword Ability'] = pd.Series([e.name for e in KeywordAbilities])
+    # Shifting by NB_KW_ABILITIES to not have same byte encoding produce same abilities
+    df['Special Ability'] = pd.Series([e.name for e in SpecialAbilities])
+    df['Special Ability'] = df['Special Ability'].shift(NB_KW_ABILITIES)
+    # Shifting again
+    df['Ability Trigger'] = pd.Series([e.name for e in AbilityTriggers])
+    df['Ability Trigger'] = df['Ability Trigger'].shift(NB_KW_ABILITIES + NB_SP_ABILITIES)
+
 
     return df
 
@@ -36,50 +44,79 @@ def generate_hashes(nb_cards=100, sha_input_scale_factor=1000):
     return hashes
 
 
-def build_cards(hashes):
+def build_cards(hashes, price_enc=32, thg_enc=16, pow_enc=16):
     # Returns dataframe with hash to encodings comparison
 
-    # Checking the hash for matching encodings
-    nb_abilities_list = []
-    abilities_list = []
-    power_list = []
-    toughness_list = []
-    price_list = []
+    # Int for card
+    price_list = []         # in [0; price_enc]
+    power_list = []         # in [0; thg_enc]
+    toughness_list = []     # in [0; pow_enc]
+
+    # Lists with number of abilities/triggers for easier data handling 
+    nb_kw_ab_list = []
+    nb_sp_ab_list = []
+    nb_trig_list = []
+    # Lists with the abilities/triggers as defined in df_encodings
+    kw_ab_list = []
+    sp_ab_list = []
+    trig_list = []
 
     for hash in hashes:
         byte_array = bytearray.fromhex(hash)
         
-        nb_abilities = 0
-        abilities = []
         power = 0
         thoughness = 0
         price = 0
+        kw_abilities = []
+        sp_abilities = []
+        triggers = []
 
         for i, byte in enumerate(byte_array):
             # Power, toughness and price bytes may appear anywhere in hash
-            price += sum(df_encoding.index[:32] == byte)
-            thoughness += sum(df_encoding.index[33:48] == byte)
-            power += sum(df_encoding.index[49:64] == byte)
-            nb_abilities += sum(df_encoding.index[:nb_encoded_abilites] == byte)
-            ab = df_encoding.iloc[int(byte)]['Ability']
-            if isinstance(ab, str):
-                abilities.append(ab)
+            price += sum(df_encoding.index[:price_enc] == byte)
+            thoughness += sum(df_encoding.index[price_enc+1:price_enc+thg_enc] == byte)
+            power += sum(df_encoding.index[price_enc+thg_enc+1:price_enc+thg_enc+pow_enc] == byte)
+
+            # Card abilites
+            kw_ab = df_encoding.iloc[int(byte)]['Keyword Ability']
+            if isinstance(kw_ab, str):
+                if not kw_ab in kw_abilities:
+                    kw_abilities.append(kw_ab)
+
+            sp_ab = df_encoding.iloc[int(byte)]['Special Ability']
+            if isinstance(sp_ab, str):
+                if not sp_ab in sp_abilities:
+                    sp_abilities.append(sp_ab)
+            
+            trig = df_encoding.iloc[int(byte)]['Ability Trigger']
+            if isinstance(trig, str):
+                if not trig in triggers:
+                    triggers.append(trig)
 
             # Ability bytes must appear at correct position to be valid
             # if df_encoding.index[i] == byte:
             #     abilities += 1
-        
-        nb_abilities_list.append(nb_abilities)
-        abilities_list.append(abilities)
+
+        price_list.append(price)
         power_list.append(power)
         toughness_list.append(thoughness)
-        price_list.append(price)
+
+        nb_kw_ab_list.append(len(kw_abilities))
+        kw_ab_list.append(kw_abilities)
+        nb_sp_ab_list.append(len(sp_abilities))
+        sp_ab_list.append(sp_abilities)
+        nb_trig_list.append(len(triggers))
+        trig_list.append(triggers)
 
     df_cards = pd.DataFrame({'Price': price_list,
                             'Power': power_list, 
                             'Toughness': toughness_list, 
-                            '# Abilities': nb_abilities_list,
-                            'Abilities': abilities_list,
+                            '# Keyword Abilities': nb_kw_ab_list,
+                            '# Special Abilities': nb_sp_ab_list,
+                            '# Triggers': nb_trig_list,
+                            'Keyword Abilities': kw_ab_list,
+                            'Special Abilities': sp_ab_list,
+                            'Triggers': trig_list, 
                             'Hash': hashes})
 
     return df_cards
@@ -92,24 +129,50 @@ def drop_nonvalid_cards(df_cards, drop_cons):
         print('Dropping cards with {}: {}'.format(con, len(ids)))
         df_cards = df_cards.drop(ids)
 
+    # Dropping Triggers for no corresponding special ability
+    ids = []
+    for id, card in df_cards.iterrows():
+        if card['# Triggers'] > card['# Special Abilities']:
+            ids.append(id)
+    print('Dropping cards with more triggers than abilities: {}'.format(len(ids)))
+    df_cards = df_cards.drop(ids)
+
     return df_cards
 
 
-def plot_attribute_distribution(df_cards):
+def plot_attribute_distribution(df_cards, nb_cards, subplots=False):
 
-    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
+    colors = px.colors.qualitative.Set1
 
-    fig = plotly.subplots.make_subplots(rows=1, cols=4,
-                                        subplot_titles=df_cards.columns[:4])
-    fig.update_layout(title_text=f'Attribute distributions of {len(df_cards)} cards', yaxis_title='# Cards')
+    if subplots:
+        nb_rows, nb_cols = 2, 3
+        fig = plotly.subplots.make_subplots(rows=nb_rows, cols=nb_cols,
+                                            subplot_titles=df_cards.columns[:6],
+                                            y_title='# Cards')
+        row = 1
+        for i in range(6):
+            if i == nb_cols:
+                row = 2
+            bars = df_cards.iloc[:, i].value_counts(normalize=False)
+            fig.append_trace(
+                go.Bar(x=bars.index, y=bars.values, name=df_cards.columns[i], marker_color=colors[i]),
+                row=row, col=(i%nb_cols)+1
+            )
 
-    for i in range(4):
-        bars = df_cards.iloc[:, i].value_counts(normalize=True)
-        fig.append_trace(
-            go.Bar(x=bars.index, y=bars.values, name=df_cards.columns[i], marker_color=colors[i]),
-            row=1, col=i+1
-        )
+    else:
+        data = []
+        for i in range(6):
+            bars = df_cards.iloc[:, i].value_counts()
+            data.append(go.Bar(x=bars.index, y=bars.values,
+                        name=df_cards.columns[i],
+                        marker_color=colors[i])
+                        )
 
+        fig = go.Figure(data=data)
+        fig.update_layout(barmode='group')
+
+    fig.update_layout(title_text=f'Attribute distributions of {len(df_cards)} cards (from originally {nb_cards})', 
+                      template='plotly_dark')
     fig.show()
 
 
@@ -117,26 +180,29 @@ if __name__ == '__main__':
 
     plot = True
     nb_cards = 1000
-    
-    # 17 as of now
-    nb_encoded_abilites = len(StaticAbilities)
 
-    df_encoding = generate_encoding()
+    random.seed(0)
+
+    # MAX_ENCODING = int('0b11111111', 2)
+    NB_KW_ABILITIES = len(KeywordAbilities)
+    NB_SP_ABILITIES = len(SpecialAbilities)
+
+    df_encoding = generate_encodings()
     hashes = generate_hashes(nb_cards)
     df_cards = build_cards(hashes)
 
     # Conditions that make a card non-valid (overpowered/unplayable/whack-ass weak)
     drop_conditions = {'no toughness': df_cards['Toughness'] == 0, 
                 'insane powers': (df_cards['Toughness'] > 3) & (df_cards['Power'] > 3) & (df_cards['Price'] < 2),
-                'too many abilities': df_cards['# Abilities'] > 4}
-
+                'too many abilities': df_cards['# Keyword Abilities'] > 4}
+                #'Trigger without ability': len(df_cards['Triggers']) > len(df_cards['Special Abilities'])}
     df_cards = drop_nonvalid_cards(df_cards, drop_conditions)
 
     print('Remaining cards: {}'.format(df_cards.shape[0]))
-    print(df_cards)
+    print(df_cards.drop(labels=['# Keyword Abilities', '# Special Abilities', '# Triggers'], axis=1))
     df_cards.to_csv('cards.csv')
 
     if plot:
-        plot_attribute_distribution(df_cards)   
+        plot_attribute_distribution(df_cards, nb_cards)   
 
     exit()

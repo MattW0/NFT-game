@@ -1,6 +1,6 @@
 from enum import Enum, auto
 
-class StaticAbilities(Enum):
+class KeywordAbilities(Enum):
     Deathtouch = auto()
     Defender = auto()
     Double_Strike = auto()
