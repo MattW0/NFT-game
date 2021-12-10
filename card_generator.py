@@ -7,10 +7,15 @@ import matplotlib.pyplot as plt
 import plotly
 import plotly.express as px
 import plotly.graph_objects as go
+from tqdm import tqdm
+import warnings
+warnings.filterwarnings('ignore')
 
 from Encodings.keyword_abilities import KeywordAbilities
 from Encodings.special_abilities import SpecialAbilities
 from Encodings.ability_triggers import AbilityTriggers
+
+from Artworks.generate_artwork import draw_artwork
 
 # TODO: card name, artwork, mana/money cost, special abilities
 
@@ -44,7 +49,7 @@ def generate_hashes(nb_cards=100, sha_input_scale_factor=1000):
     return hashes
 
 
-def build_cards(hashes, price_enc=32, thg_enc=16, pow_enc=16):
+def build_cards(hashes):
     # Returns dataframe with hash to encodings comparison
 
     # Int for card
@@ -61,7 +66,8 @@ def build_cards(hashes, price_enc=32, thg_enc=16, pow_enc=16):
     sp_ab_list = []
     trig_list = []
 
-    for hash in hashes:
+    print('Generating cards...')
+    for hash in tqdm(hashes):
         byte_array = bytearray.fromhex(hash)
         
         power = 0
@@ -73,9 +79,9 @@ def build_cards(hashes, price_enc=32, thg_enc=16, pow_enc=16):
 
         for i, byte in enumerate(byte_array):
             # Power, toughness and price bytes may appear anywhere in hash
-            price += sum(df_encoding.index[:price_enc] == byte)
-            thoughness += sum(df_encoding.index[price_enc+1:price_enc+thg_enc] == byte)
-            power += sum(df_encoding.index[price_enc+thg_enc+1:price_enc+thg_enc+pow_enc] == byte)
+            price += sum(df_encoding.index[:NB_PRICE_ENC] == byte)
+            thoughness += sum(df_encoding.index[NB_PRICE_ENC+1:NB_PRICE_ENC+NB_THG_ENC] == byte)
+            power += sum(df_encoding.index[NB_PRICE_ENC+NB_THG_ENC+1:NB_PRICE_ENC+NB_THG_ENC+NB_POW_ENC] == byte)
 
             # Card abilites
             kw_ab = df_encoding.iloc[int(byte)]['Keyword Ability']
@@ -122,7 +128,7 @@ def build_cards(hashes, price_enc=32, thg_enc=16, pow_enc=16):
     return df_cards
 
 
-def drop_nonvalid_cards(df_cards, drop_cons):
+def drop_nonvalid_cards(df_cards, drop_cons, drop_trig_without_ab=True):
     # Dropping useless and overpowered cards
     for con in drop_cons.keys():
         ids = df_cards[drop_cons[con]].index
@@ -130,12 +136,13 @@ def drop_nonvalid_cards(df_cards, drop_cons):
         df_cards = df_cards.drop(ids)
 
     # Dropping Triggers for no corresponding special ability
-    ids = []
-    for id, card in df_cards.iterrows():
-        if card['# Triggers'] > card['# Special Abilities']:
-            ids.append(id)
-    print('Dropping cards with more triggers than abilities: {}'.format(len(ids)))
-    df_cards = df_cards.drop(ids)
+    if drop_trig_without_ab:
+        ids = []
+        for id, card in df_cards.iterrows():
+            if card['# Triggers'] > card['# Special Abilities']:
+                ids.append(id)
+        print('Dropping cards with more triggers than abilities: {}'.format(len(ids)))
+        df_cards = df_cards.drop(ids)
 
     return df_cards
 
@@ -178,14 +185,20 @@ def plot_attribute_distribution(df_cards, nb_cards, subplots=False):
 
 if __name__ == '__main__':
 
-    plot = True
-    nb_cards = 1000
+    plot = False
+    draw = True
+    nb_cards = 50
 
-    random.seed(0)
+    # random.seed(0)
 
     # MAX_ENCODING = int('0b11111111', 2)
     NB_KW_ABILITIES = len(KeywordAbilities)
     NB_SP_ABILITIES = len(SpecialAbilities)
+
+    # The higher nb encodings, the more likely byte matches are
+    NB_PRICE_ENC = 32
+    NB_THG_ENC = 16
+    NB_POW_ENC = 16
 
     df_encoding = generate_encodings()
     hashes = generate_hashes(nb_cards)
@@ -199,10 +212,17 @@ if __name__ == '__main__':
     df_cards = drop_nonvalid_cards(df_cards, drop_conditions)
 
     print('Remaining cards: {}'.format(df_cards.shape[0]))
-    print(df_cards.drop(labels=['# Keyword Abilities', '# Special Abilities', '# Triggers'], axis=1))
+    # print(df_cards.drop(labels=['# Keyword Abilities', '# Special Abilities', '# Triggers'], axis=1))
     df_cards.to_csv('cards.csv')
 
     if plot:
-        plot_attribute_distribution(df_cards, nb_cards)   
+        plot_attribute_distribution(df_cards, nb_cards)
 
+    if draw:  
+
+        cards = df_cards.drop(labels=['Keyword Abilities', 'Special Abilities', 'Triggers'], axis=1)
+        print('Generating artworks...')
+        for id, card in tqdm(cards.iterrows()):
+            draw_artwork(card)
+        
     exit()
