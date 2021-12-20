@@ -193,7 +193,7 @@ def draw_artwork(card):
     # img_draw.ellipse([(100, 100), (400, 300)], fill=type_color)
     # img_draw.ellipse([(100, 100), (300, 300)], fill=None)
 
-    img.save(f'./Artworks/out/{hash}.png')
+    img.save(f'../{hash}.png')
 
     return
 

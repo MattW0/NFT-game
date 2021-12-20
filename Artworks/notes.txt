@@ -1,8 +1,0 @@
-Artwork based on hash?
-Eg. if power > toughness -> triangle in bg
-price -> bulkiness of shape in bg
-mana color -> shade of color palette
-Abilities -> individual patterns/filters
-
-"Random" input wird zu erkennbar unterschiedlechem Biud, ohni realistischi Komponente.
-

@@ -213,7 +213,7 @@ if __name__ == '__main__':
 
     print('Remaining cards: {}'.format(df_cards.shape[0]))
     # print(df_cards.drop(labels=['# Keyword Abilities', '# Special Abilities', '# Triggers'], axis=1))
-    df_cards.to_csv('cards.csv')
+    df_cards.to_csv('../cards.csv')
 
     if plot:
         plot_attribute_distribution(df_cards, nb_cards)
