@@ -15,7 +15,7 @@ from Encodings.keyword_abilities import KeywordAbilities
 from Encodings.special_abilities import SpecialAbilities
 from Encodings.ability_triggers import AbilityTriggers
 
-from Artworks.generate_artwork import draw_artwork
+from utils.generate_artwork import draw_artwork
 
 # TODO: card name, artwork, mana/money cost, special abilities
 
@@ -187,7 +187,7 @@ if __name__ == '__main__':
 
     plot = False
     draw = True
-    nb_cards = 50
+    nb_cards = 30
 
     # random.seed(0)
 
