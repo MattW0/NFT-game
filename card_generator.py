@@ -34,22 +34,37 @@ def generate_encodings():
     df['Ability Trigger'] = pd.Series([e.name for e in AbilityTriggers])
     df['Ability Trigger'] = df['Ability Trigger'].shift(NB_KW_ABILITIES + NB_SP_ABILITIES)
 
-
     return df
 
 
-def generate_hashes(nb_cards=100, sha_input_scale_factor=1000):
+def generate_cardnames():
 
-    # Creating sha-256 hashes
-    random_inputs = [random.random() * x for x in [sha_input_scale_factor] * nb_cards]
-    strings = [str(x) for x in random_inputs]
-    encoded = [s.encode() for s in strings]
+    # read names.txt to have titles and inputs for cards
+    names = []
+    with open('names.txt', 'r') as f:
+        for line in f:
+            names.append(line.strip())
+
+    random.shuffle(names)
+
+    return names[:nb_cards]
+
+
+def generate_hashes(nb_cards=100, names=None, sha_input_scale_factor=1000):
+
+    # Random numbers converted to strings
+
+    if names is None:
+        random_inputs = [random.random() * x for x in [sha_input_scale_factor] * nb_cards]
+        names = [str(x) for x in random_inputs]
+
+    encoded = [s.encode() for s in names[:nb_cards]]
     hashes = [hashlib.sha256(s).hexdigest() for s in encoded]
 
     return hashes
 
 
-def build_cards(hashes):
+def build_cards(hashes, names, df_encoding):
     # Returns dataframe with hash to encodings comparison
 
     # Int for card
@@ -114,7 +129,8 @@ def build_cards(hashes):
         nb_trig_list.append(len(triggers))
         trig_list.append(triggers)
 
-    df_cards = pd.DataFrame({'Price': price_list,
+    df_cards = pd.DataFrame({'Name': names,
+                            'Price': price_list,
                             'Power': power_list, 
                             'Toughness': toughness_list, 
                             '# Keyword Abilities': nb_kw_ab_list,
@@ -168,7 +184,7 @@ def plot_attribute_distribution(df_cards, nb_cards, subplots=False):
 
     else:
         data = []
-        for i in range(6):
+        for i in range(1, 7):
             bars = df_cards.iloc[:, i].value_counts()
             data.append(go.Bar(x=bars.index, y=bars.values,
                         name=df_cards.columns[i],
@@ -183,26 +199,13 @@ def plot_attribute_distribution(df_cards, nb_cards, subplots=False):
     fig.show()
 
 
-if __name__ == '__main__':
+def main():
 
-    plot = False
-    draw = True
-    nb_cards = 30
-
-    # random.seed(0)
-
-    # MAX_ENCODING = int('0b11111111', 2)
-    NB_KW_ABILITIES = len(KeywordAbilities)
-    NB_SP_ABILITIES = len(SpecialAbilities)
-
-    # The higher nb encodings, the more likely byte matches are
-    NB_PRICE_ENC = 32
-    NB_THG_ENC = 16
-    NB_POW_ENC = 16
-
+    # read names.txt to have titles and inputs for cards
+    names = generate_cardnames()
     df_encoding = generate_encodings()
-    hashes = generate_hashes(nb_cards)
-    df_cards = build_cards(hashes)
+    hashes = generate_hashes(nb_cards, names)
+    df_cards = build_cards(hashes, names, df_encoding)
 
     # Conditions that make a card non-valid (overpowered/unplayable/whack-ass weak)
     drop_conditions = {'no toughness': df_cards['Toughness'] == 0, 
@@ -213,16 +216,37 @@ if __name__ == '__main__':
 
     print('Remaining cards: {}'.format(df_cards.shape[0]))
     # print(df_cards.drop(labels=['# Keyword Abilities', '# Special Abilities', '# Triggers'], axis=1))
-    df_cards.to_csv('../cards.csv')
+    df_cards.to_csv(f'cards_from_{nb_cards}.csv')
 
     if plot:
         plot_attribute_distribution(df_cards, nb_cards)
 
     if draw:  
-
         cards = df_cards.drop(labels=['Keyword Abilities', 'Special Abilities', 'Triggers'], axis=1)
         print('Generating artworks...')
-        for id, card in tqdm(cards.iterrows()):
+        for _, card in tqdm(cards.iterrows()):
             draw_artwork(card)
+
+    return
+
+
+if __name__ == '__main__':
+
+    plot = False
+    draw = True
+    nb_cards = 100
+
+    random.seed(0)
+
+    # MAX_ENCODING = int('0b11111111', 2)
+    NB_KW_ABILITIES = len(KeywordAbilities)
+    NB_SP_ABILITIES = len(SpecialAbilities)
+
+    # The higher nb encodings, the more likely byte matches are
+    NB_PRICE_ENC = 32
+    NB_THG_ENC = 16
+    NB_POW_ENC = 16  
+
+    main()
         
     exit()

@@ -11,7 +11,7 @@ HEIGHT = 720
 def rand_hue_shift(col, max_hue_shift=0.3):
     col = colorsys.rgb_to_hsv(*col)
 
-    col = (col[0] + random.uniform(-0.5, 0.5) * max_hue_shift, 
+    col = (col[0] + random.uniform(-0.5, 0.5) * max_hue_shift,
            col[1],
            col[2])
 
@@ -21,13 +21,13 @@ def rand_hue_shift(col, max_hue_shift=0.3):
 
 
 def random_rectangles(img_draw, rec_max_width, base_color, grid_based=True, MARGIN=3):
-    
+
     if grid_based:
         grid_size = int(WIDTH/(rec_max_width - WIDTH % rec_max_width))
         grid = [grid_size, grid_size] # div by 80
         for x in range(grid[0]):
             for y in range(grid[1]):
-        
+
                 mid_x = (x + 0.5) * rec_max_width
                 mid_y = (y + 0.5) * rec_max_width
 
@@ -35,9 +35,9 @@ def random_rectangles(img_draw, rec_max_width, base_color, grid_based=True, MARG
                 rec_height = rec_max_width * 0.95
 
                 col = rand_hue_shift(base_color)
-                rectangle_shape = [(mid_x - 0.5 * rec_width, mid_y - 0.5 * rec_height), 
+                rectangle_shape = [(mid_x - 0.5 * rec_width, mid_y - 0.5 * rec_height),
                                 (mid_x + 0.5 * rec_width, mid_y + 0.5 * rec_height)]
-                img_draw.rounded_rectangle(rectangle_shape, fill=(col))            
+                img_draw.rounded_rectangle(rectangle_shape, fill=(col))
 
     else:
         next_x, next_y = 0, 0
@@ -56,7 +56,7 @@ def random_rectangles(img_draw, rec_max_width, base_color, grid_based=True, MARG
                 img_draw.rounded_rectangle(rectangle_shape, fill=(col))
 
                 x += dx + MARGIN
-            
+
             y += dy + MARGIN
             x = MARGIN
 
@@ -75,13 +75,13 @@ def middle_stamp(img_draw, sides_byte, base_color, stamp_size=200, stamp_outline
         d_angle = int(sides_byte) * 11.25
         start, stop = - 90 - d_angle/2, - 90 + d_angle/2
 
-        img_draw.pieslice([(WIDTH/2 - stamp_size - stamp_outline_width, HEIGHT/2 - stamp_size - stamp_outline_width), 
+        img_draw.pieslice([(WIDTH/2 - stamp_size - stamp_outline_width, HEIGHT/2 - stamp_size - stamp_outline_width),
                            (WIDTH/2 + stamp_size + stamp_outline_width, HEIGHT/2 + stamp_size + stamp_outline_width)],
                            0, 360, fill=(0,0,0), width=stamp_outline_width)
-        img_draw.pieslice([(WIDTH/2 - stamp_size, HEIGHT/2 - stamp_size), 
+        img_draw.pieslice([(WIDTH/2 - stamp_size, HEIGHT/2 - stamp_size),
                            (WIDTH/2 + stamp_size, HEIGHT/2 + stamp_size)],
                            start, stop, fill=base_color, width=stamp_outline_width)
-        
+
 
     else:
         if n_sides == 3:
@@ -121,7 +121,7 @@ def contour_lines(img_draw, nb_lines):
 
         if remaining_lines < adjust_line_width_threshold:
             l_width = adjust_line_width_threshold - remaining_lines
-            
+
         d_x = WIDTH / (2 * min(max_nb_lines, remaining_lines))
         d_y = HEIGHT / (2 * min(max_nb_lines, remaining_lines))
         x_s, x_e, y_s, y_e = WIDTH, WIDTH - d_x, HEIGHT/2, HEIGHT
@@ -146,7 +146,7 @@ def contour_lines(img_draw, nb_lines):
 
     remaining_lines = nb_lines - 3 * max_nb_lines
 
-    # Upper left 
+    # Upper left
     if remaining_lines > 0:
 
         if remaining_lines < adjust_line_width_threshold:
@@ -165,16 +165,16 @@ def contour_lines(img_draw, nb_lines):
 def draw_artwork(card):
     # Card = row entry of df_cards:
     # Price, Power, Toughness, # Keyword Abilities, # Special Abilities, # Triggers, Hash
-    pri, pow, thg, kw, sp, tr, hash = card
+    name, pri, pow, thg, kw, sp, tr, hash = card
 
     '''
         Extracting info from hash:
         Byte 1:         n_sides of stamp polygon
         Byte 2:         rec_max_width
         Byte 3:         nb_lines in upper right corner
-        Byte X: (flags) grid, lb, rb, tb, bb, 
+        Byte X: (flags) grid, lb, rb, tb, bb,
         Bytes 26-28:    Hue of type shape
-        Bytes 29-32:    Mean hue value of rectangles 
+        Bytes 29-32:    Mean hue value of rectangles
     '''
     byte_array = bytearray.fromhex(hash)
 
@@ -183,17 +183,17 @@ def draw_artwork(card):
     nb_lines = 256 - int(byte_array[2])
     base_color = tuple(int(x) for x in byte_array[29:])
     type_color = tuple(int(x) for x in byte_array[26:29])
-    
+
     img = Image.new('RGB', (WIDTH, HEIGHT))
     img_draw = ImageDraw.Draw(img)
 
     img_draw = random_rectangles(img_draw, rec_max_width, base_color, grid_based=False)
-    img_draw = middle_stamp(img_draw, n_sides_polygon, base_color)
+    img_draw = middle_stamp(img_draw, n_sides_polygon, type_color)
     img_draw = contour_lines(img_draw, nb_lines)
     # img_draw.ellipse([(100, 100), (400, 300)], fill=type_color)
     # img_draw.ellipse([(100, 100), (300, 300)], fill=None)
 
-    img.save(f'../{hash}.png')
+    img.save(f'../Artworks/Out/{name}.png')
 
     return
 
