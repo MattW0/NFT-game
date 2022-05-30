@@ -8,8 +8,10 @@ __pycache__/
 
 *.csv
 *.png
+*.json
 
 # Distribution / packaging
+.vscode/
 .Python
 build/
 develop-eggs/
