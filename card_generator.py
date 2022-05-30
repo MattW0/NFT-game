@@ -16,6 +16,7 @@ from Encodings.special_abilities import SpecialAbilities
 from Encodings.ability_triggers import AbilityTriggers
 
 from utils.generate_artwork import draw_artwork
+from utils.csv_to_json import save_json
 
 # TODO: card name, artwork, mana/money cost, special abilities
 
@@ -94,7 +95,7 @@ def build_cards(hashes, names, df_encoding):
 
         for i, byte in enumerate(byte_array):
             # Power, toughness and price bytes may appear anywhere in hash
-            price += sum(df_encoding.index[:NB_PRICE_ENC] == byte)
+            # price += sum(df_encoding.index[:NB_PRICE_ENC] == byte)
             thoughness += sum(df_encoding.index[NB_PRICE_ENC+1:NB_PRICE_ENC+NB_THG_ENC] == byte)
             power += sum(df_encoding.index[NB_PRICE_ENC+NB_THG_ENC+1:NB_PRICE_ENC+NB_THG_ENC+NB_POW_ENC] == byte)
 
@@ -113,6 +114,8 @@ def build_cards(hashes, names, df_encoding):
             if isinstance(trig, str):
                 if not trig in triggers:
                     triggers.append(trig)
+                    
+            price = math.floor((thoughness + power)/2 + len(kw_abilities) + len(sp_abilities) + len(triggers))
 
             # Ability bytes must appear at correct position to be valid
             # if df_encoding.index[i] == byte:
@@ -144,7 +147,15 @@ def build_cards(hashes, names, df_encoding):
     return df_cards
 
 
-def drop_nonvalid_cards(df_cards, drop_cons, drop_trig_without_ab=True):
+def drop_nonvalid_cards(df_cards, drop_trig_without_ab=True):
+    
+    # Conditions that make a card non-valid (overpowered/unplayable/whack-ass weak)
+    drop_cons = {
+        'no toughness': df_cards['Toughness'] == 0, 
+        'insane powers': (df_cards['Toughness'] > 3) & (df_cards['Power'] > 3) & (df_cards['Price'] < 2),
+        'too many abilities': df_cards['# Keyword Abilities'] > 4
+    }
+        
     # Dropping useless and overpowered cards
     for con in drop_cons.keys():
         ids = df_cards[drop_cons[con]].index
@@ -205,18 +216,9 @@ def main():
     names = generate_cardnames()
     df_encoding = generate_encodings()
     hashes = generate_hashes(nb_cards, names)
+    
     df_cards = build_cards(hashes, names, df_encoding)
-
-    # Conditions that make a card non-valid (overpowered/unplayable/whack-ass weak)
-    drop_conditions = {'no toughness': df_cards['Toughness'] == 0, 
-                'insane powers': (df_cards['Toughness'] > 3) & (df_cards['Power'] > 3) & (df_cards['Price'] < 2),
-                'too many abilities': df_cards['# Keyword Abilities'] > 4}
-                #'Trigger without ability': len(df_cards['Triggers']) > len(df_cards['Special Abilities'])}
-    df_cards = drop_nonvalid_cards(df_cards, drop_conditions)
-
-    print('Remaining cards: {}'.format(df_cards.shape[0]))
-    # print(df_cards.drop(labels=['# Keyword Abilities', '# Special Abilities', '# Triggers'], axis=1))
-    df_cards.to_csv(f'cards_from_{nb_cards}.csv')
+    df_cards = drop_nonvalid_cards(df_cards)
 
     if plot:
         plot_attribute_distribution(df_cards, nb_cards)
@@ -227,14 +229,18 @@ def main():
         for _, card in tqdm(cards.iterrows()):
             draw_artwork(card)
 
+    print('Remaining cards: {}'.format(df_cards.shape[0]))
+    #df_cards.to_csv(f'cards_from_{nb_cards}.csv')
+    save_json(df_cards)
+    
     return
 
 
 if __name__ == '__main__':
 
-    plot = False
-    draw = True
     nb_cards = 100
+    plot = True
+    draw = False
 
     random.seed(0)
 
@@ -246,7 +252,5 @@ if __name__ == '__main__':
     NB_PRICE_ENC = 32
     NB_THG_ENC = 16
     NB_POW_ENC = 16  
-
+    
     main()
-        
-    exit()

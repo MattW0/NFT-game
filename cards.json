@@ -1,0 +1,808 @@
+[
+    {
+        "title": "Eirian",
+        "cost": 6,
+        "attack": 3,
+        "health": 2,
+        "keyword_abilities": [
+            "Lifelink"
+        ],
+        "special_abilities": [
+            "Gain_HP",
+            "Scry",
+            "Mill"
+        ],
+        "triggers": [],
+        "hash": "9b19bb3fcd7eb66d36476d41c6fe4c57ef6dca0a2d3e2fc24358baea14fe135a"
+    },
+    {
+        "title": "Corinda",
+        "cost": 6,
+        "attack": 1,
+        "health": 2,
+        "keyword_abilities": [
+            "Lifelink",
+            "Menace",
+            "Protection"
+        ],
+        "special_abilities": [
+            "Create_Treasure"
+        ],
+        "triggers": [
+            "Beginning_of_Main"
+        ],
+        "hash": "cf358428f65f0ab355cbf6c449185d79784560805a41db180b21c5de0c60d484"
+    },
+    {
+        "title": "Mirian",
+        "cost": 6,
+        "attack": 1,
+        "health": 4,
+        "keyword_abilities": [],
+        "special_abilities": [
+            "Destroy",
+            "Scry",
+            "Gain_HP"
+        ],
+        "triggers": [
+            "Beginning_of_Endstep"
+        ],
+        "hash": "162c9523c126c7bcb8c1409a14a24b8eee7c4b4b7985cc3adca819c7b6254ec9"
+    },
+    {
+        "title": "Scythe",
+        "cost": 6,
+        "attack": 0,
+        "health": 1,
+        "keyword_abilities": [
+            "Protection",
+            "Vigilance",
+            "Intimidate",
+            "Trample"
+        ],
+        "special_abilities": [
+            "Gain_HP"
+        ],
+        "triggers": [
+            "Beginning_of_Endstep"
+        ],
+        "hash": "6a45cdfbff0ce4a089a0196242d7ca11fb0998d4b36a23ab7c106e438893c1e6"
+    },
+    {
+        "title": "Lysander",
+        "cost": 8,
+        "attack": 0,
+        "health": 4,
+        "keyword_abilities": [
+            "Haste",
+            "Deathtouch"
+        ],
+        "special_abilities": [
+            "Create_Token_Creature",
+            "Mill"
+        ],
+        "triggers": [
+            "Beginning_of_Combat",
+            "Beginning_of_Main"
+        ],
+        "hash": "227e17e506995f938122007091cd4b8ce3494e135188d9e7659b212ddfbedb7e"
+    },
+    {
+        "title": "Rhianwen",
+        "cost": 5,
+        "attack": 2,
+        "health": 1,
+        "keyword_abilities": [
+            "Flash",
+            "Lifelink"
+        ],
+        "special_abilities": [
+            "Scry"
+        ],
+        "triggers": [
+            "Attack"
+        ],
+        "hash": "fe04fbcc38a131f06f6c50bcb6531c040afa84a6e32571e365aba564d8bbe814"
+    },
+    {
+        "title": "Autumn",
+        "cost": 5,
+        "attack": 3,
+        "health": 3,
+        "keyword_abilities": [
+            "Menace",
+            "Haste"
+        ],
+        "special_abilities": [],
+        "triggers": [],
+        "hash": "e0906c2d6dc6d5263762d7ee5895e0544c326c26fb7f4f3163cde2d20b8f068f"
+    },
+    {
+        "title": "Sorcha",
+        "cost": 6,
+        "attack": 1,
+        "health": 2,
+        "keyword_abilities": [],
+        "special_abilities": [
+            "Scry",
+            "Deal_Damage",
+            "Exile"
+        ],
+        "triggers": [
+            "Attack",
+            "ETB"
+        ],
+        "hash": "fb8337febcfb8b141aeffe1cff5fe6bb159b1b2fec67bbc7ef6cbc6a25bad946"
+    },
+    {
+        "title": "Sowenna",
+        "cost": 5,
+        "attack": 4,
+        "health": 2,
+        "keyword_abilities": [
+            "Protection"
+        ],
+        "special_abilities": [
+            "Deal_Damage"
+        ],
+        "triggers": [],
+        "hash": "5b68482b887d6daae3c2e7f838b9b1918825c0d01a4a3ea59934d194b70c3e61"
+    },
+    {
+        "title": "Griffin",
+        "cost": 5,
+        "attack": 2,
+        "health": 2,
+        "keyword_abilities": [
+            "Intimidate",
+            "Flying"
+        ],
+        "special_abilities": [
+            "Create_Token_Creature"
+        ],
+        "triggers": [],
+        "hash": "09343dc21798dad949c79a8f7105504e6e28a9574744427f8241e5a1efcf26b9"
+    },
+    {
+        "title": "Dominic",
+        "cost": 6,
+        "attack": 3,
+        "health": 1,
+        "keyword_abilities": [
+            "Trample"
+        ],
+        "special_abilities": [
+            "Create_Treasure",
+            "Deal_Damage"
+        ],
+        "triggers": [
+            "Beginning_of_Endstep"
+        ],
+        "hash": "de18fa384eea6a1aa4854fd4d1db73c58936d134a6cf58d8236f575e10b4ae48"
+    },
+    {
+        "title": "Braith",
+        "cost": 6,
+        "attack": 1,
+        "health": 1,
+        "keyword_abilities": [
+            "Trample"
+        ],
+        "special_abilities": [
+            "Create_Token_Creature",
+            "Mill"
+        ],
+        "triggers": [
+            "Deals_Damage_To_Player",
+            "Deals_Damage"
+        ],
+        "hash": "293eed97e365afce98591f44ea72305c77ebbfa255cf91171e10cec3eaec13b2"
+    },
+    {
+        "title": "Rosabelle",
+        "cost": 7,
+        "attack": 2,
+        "health": 3,
+        "keyword_abilities": [
+            "Prowess"
+        ],
+        "special_abilities": [
+            "Deal_Damage",
+            "Exile"
+        ],
+        "triggers": [
+            "Beginning_of_Combat",
+            "Attack"
+        ],
+        "hash": "9edaac49a41a95cb158a7a442945c0e9b15e3dbddf6dd224d5a4ab65221c3a0d"
+    },
+    {
+        "title": "Oriana",
+        "cost": 4,
+        "attack": 1,
+        "health": 1,
+        "keyword_abilities": [
+            "Shroud",
+            "Double_Strike"
+        ],
+        "special_abilities": [
+            "Mill"
+        ],
+        "triggers": [],
+        "hash": "c10f61cc60ac13eb3bde62a6b00f02ccde8254939a97ad90a09658a44e6c2e67"
+    },
+    {
+        "title": "Morgana",
+        "cost": 6,
+        "attack": 2,
+        "health": 1,
+        "keyword_abilities": [
+            "Defender"
+        ],
+        "special_abilities": [
+            "Create_Token_Creature",
+            "Mill"
+        ],
+        "triggers": [
+            "Attack",
+            "ETB"
+        ],
+        "hash": "8af1da89d817259b9e4ada608dbb9ce3b9011ccf80626733e752b01b8d13a532"
+    },
+    {
+        "title": "Arthur",
+        "cost": 3,
+        "attack": 1,
+        "health": 1,
+        "keyword_abilities": [
+            "Prowess",
+            "Trample"
+        ],
+        "special_abilities": [],
+        "triggers": [],
+        "hash": "52b67b60260da3937510ad545c7f46f8d9915bd27e1082e76947fb309f913bd3"
+    },
+    {
+        "title": "Jocasta",
+        "cost": 4,
+        "attack": 3,
+        "health": 3,
+        "keyword_abilities": [
+            "Reach"
+        ],
+        "special_abilities": [],
+        "triggers": [],
+        "hash": "2a9c4971b09ab9329273762c0ec5709a99f5b4ae3a95c5e55d4a29a6d97534a3"
+    },
+    {
+        "title": "Ankhara",
+        "cost": 7,
+        "attack": 1,
+        "health": 3,
+        "keyword_abilities": [
+            "Haste",
+            "Defender"
+        ],
+        "special_abilities": [
+            "Mill",
+            "Exile"
+        ],
+        "triggers": [
+            "Beginning_of_Upkeep"
+        ],
+        "hash": "209f9a27137e49e58015e97f2f5d91a43ea8e74c86d86bcfa30601e0c9b52e4f"
+    },
+    {
+        "title": "Rune",
+        "cost": 6,
+        "attack": 1,
+        "health": 3,
+        "keyword_abilities": [
+            "First_Strike",
+            "Trample"
+        ],
+        "special_abilities": [
+            "Mill"
+        ],
+        "triggers": [
+            "Beginning_of_Upkeep"
+        ],
+        "hash": "f55862c603b61328a43fc57f2655105fe72ba0f6f84320d944c642f0c1f6becd"
+    },
+    {
+        "title": "Merlin",
+        "cost": 6,
+        "attack": 2,
+        "health": 4,
+        "keyword_abilities": [
+            "Prowess",
+            "Vigilance"
+        ],
+        "special_abilities": [
+            "Create_Token_Creature"
+        ],
+        "triggers": [],
+        "hash": "74e6fbb572af72246abf610d8e268ae53e6599972c571117503dc4537b982b69"
+    },
+    {
+        "title": "Silvana",
+        "cost": 4,
+        "attack": 3,
+        "health": 2,
+        "keyword_abilities": [
+            "Shroud"
+        ],
+        "special_abilities": [
+            "Create_Treasure"
+        ],
+        "triggers": [],
+        "hash": "d98535d0328aaf8a4c7567ffa3257c623efb581827647875be6592f20f6f7de8"
+    },
+    {
+        "title": "Clarion",
+        "cost": 5,
+        "attack": 1,
+        "health": 2,
+        "keyword_abilities": [
+            "Haste",
+            "Vigilance"
+        ],
+        "special_abilities": [
+            "Exile"
+        ],
+        "triggers": [
+            "Deals_Damage"
+        ],
+        "hash": "0640faf0636e79c4ff6727ce1139e3b7a1e8cba3d8b22f75ccca5b91151eda7f"
+    },
+    {
+        "title": "Auberon",
+        "cost": 5,
+        "attack": 3,
+        "health": 1,
+        "keyword_abilities": [
+            "Double_Strike",
+            "Flying"
+        ],
+        "special_abilities": [
+            "Put_Marker_on"
+        ],
+        "triggers": [],
+        "hash": "c4678c3d022db5678dc03e6ab5da05acc9f8f9bef67d99b1b9a95512c26ed536"
+    },
+    {
+        "title": "Branwen",
+        "cost": 4,
+        "attack": 0,
+        "health": 1,
+        "keyword_abilities": [
+            "Shroud"
+        ],
+        "special_abilities": [
+            "Gain_HP",
+            "Deal_Damage",
+            "Create_Treasure"
+        ],
+        "triggers": [],
+        "hash": "74f07bb1d052198d879bfa780f30572bf2e07eb6885057605a9a1ad0f518705e"
+    },
+    {
+        "title": "Azalea",
+        "cost": 3,
+        "attack": 2,
+        "health": 3,
+        "keyword_abilities": [
+            "Menace"
+        ],
+        "special_abilities": [],
+        "triggers": [],
+        "hash": "f9783dabf4ec2dcfb146dc0bc230d92d42652e6549ce809ddfc2f5329085f091"
+    },
+    {
+        "title": "Cordelia",
+        "cost": 2,
+        "attack": 1,
+        "health": 2,
+        "keyword_abilities": [
+            "Haste"
+        ],
+        "special_abilities": [],
+        "triggers": [],
+        "hash": "bf9f818bc8c4b579f5325bb8859a7148fc56d6b468269b7e752f8e0651b8b04b"
+    },
+    {
+        "title": "Bedivere",
+        "cost": 6,
+        "attack": 2,
+        "health": 1,
+        "keyword_abilities": [
+            "Deathtouch",
+            "Flash"
+        ],
+        "special_abilities": [
+            "Exile",
+            "Create_Token_Creature",
+            "Destroy"
+        ],
+        "triggers": [],
+        "hash": "d88acb6a55e6663cf95f004e9cda95d7155b6cd6043758172563641689874cbf"
+    },
+    {
+        "title": "Adara",
+        "cost": 7,
+        "attack": 3,
+        "health": 1,
+        "keyword_abilities": [
+            "Reach"
+        ],
+        "special_abilities": [
+            "Destroy",
+            "Deal_Damage",
+            "Create_Treasure"
+        ],
+        "triggers": [
+            "Beginning_of_Combat"
+        ],
+        "hash": "321689ab70970eaf1ac24d8a8b7918ac3222b39e3a89dda74c9abea89ae6cc8b"
+    },
+    {
+        "title": "Galahad",
+        "cost": 3,
+        "attack": 2,
+        "health": 1,
+        "keyword_abilities": [
+            "Lifelink",
+            "Double_Strike"
+        ],
+        "special_abilities": [],
+        "triggers": [],
+        "hash": "f856fe6bfa2d54ea9b82b9e80ab6749b5087303f029094327c5464d86bc46142"
+    },
+    {
+        "title": "Elora",
+        "cost": 4,
+        "attack": 0,
+        "health": 2,
+        "keyword_abilities": [
+            "Deathtouch"
+        ],
+        "special_abilities": [
+            "Put_Marker_on",
+            "Gain_HP"
+        ],
+        "triggers": [],
+        "hash": "5769cf877bf28fbf6830ce77434af3a8a1f753ca7145850070cb4b25122bcc19"
+    },
+    {
+        "title": "Chantrea",
+        "cost": 9,
+        "attack": 3,
+        "health": 1,
+        "keyword_abilities": [
+            "Hexproof",
+            "Trample",
+            "Reach",
+            "Protection"
+        ],
+        "special_abilities": [
+            "Mill",
+            "Create_Treasure"
+        ],
+        "triggers": [
+            "Deals_Damage_To_Player"
+        ],
+        "hash": "e1abdd42db1f7c13f94b51488c18f56c071038388a690ec53a600c47595e2fef"
+    },
+    {
+        "title": "Niamh",
+        "cost": 7,
+        "attack": 1,
+        "health": 2,
+        "keyword_abilities": [
+            "Defender",
+            "Flash",
+            "Reach",
+            "Haste"
+        ],
+        "special_abilities": [
+            "Create_Token_Creature"
+        ],
+        "triggers": [
+            "Deals_Damage_To_Player"
+        ],
+        "hash": "7a1f522b9029d944fcc350d89c7669cab765aa0104730ed9a217ea71324a06ab"
+    },
+    {
+        "title": "Rosina",
+        "cost": 5,
+        "attack": 5,
+        "health": 3,
+        "keyword_abilities": [
+            "Double_Strike"
+        ],
+        "special_abilities": [],
+        "triggers": [],
+        "hash": "9e332832bc73e7a1e8d8323d8002ab7b9ead3e7d98816125d0a79a572aceb0a5"
+    },
+    {
+        "title": "Myrcella",
+        "cost": 2,
+        "attack": 1,
+        "health": 2,
+        "keyword_abilities": [],
+        "special_abilities": [
+            "Gain_HP"
+        ],
+        "triggers": [],
+        "hash": "9684792da5dae89d8284619e8a19b42f33a179e7e469b5a4bd4e60cdc6afb64b"
+    },
+    {
+        "title": "Fiona",
+        "cost": 5,
+        "attack": 3,
+        "health": 2,
+        "keyword_abilities": [
+            "Prowess"
+        ],
+        "special_abilities": [
+            "Scry"
+        ],
+        "triggers": [
+            "Attack"
+        ],
+        "hash": "edadc1e65a0def66be3236619588886eaa1c6d2614fc2451a2ff396ef399af61"
+    },
+    {
+        "title": "Bianca",
+        "cost": 4,
+        "attack": 0,
+        "health": 2,
+        "keyword_abilities": [
+            "Deathtouch",
+            "Menace"
+        ],
+        "special_abilities": [
+            "Create_Treasure"
+        ],
+        "triggers": [],
+        "hash": "a13026554fe4000b974918c52f7cc15c8ddcd1d95ee476eae483828282e749a1"
+    },
+    {
+        "title": "Alastriona",
+        "cost": 7,
+        "attack": 3,
+        "health": 3,
+        "keyword_abilities": [
+            "Reach",
+            "Menace",
+            "Hexproof"
+        ],
+        "special_abilities": [
+            "Gain_HP"
+        ],
+        "triggers": [],
+        "hash": "465fe73891db814264f40e93260b33af4e72b1e0b3a82740d8f79d19243d07e6"
+    },
+    {
+        "title": "Aileen",
+        "cost": 9,
+        "attack": 4,
+        "health": 3,
+        "keyword_abilities": [
+            "Flash",
+            "Menace",
+            "Deathtouch",
+            "Hexproof"
+        ],
+        "special_abilities": [
+            "Create_Token_Creature"
+        ],
+        "triggers": [
+            "Takes_Damage"
+        ],
+        "hash": "1d8c44678104850b9d825100f8ad4c29563d8a2df234ad253fcf174cbca9073e"
+    },
+    {
+        "title": "Aliara",
+        "cost": 7,
+        "attack": 1,
+        "health": 1,
+        "keyword_abilities": [
+            "Protection",
+            "Hexproof",
+            "Trample"
+        ],
+        "special_abilities": [
+            "Put_Marker_on",
+            "Deal_Damage"
+        ],
+        "triggers": [
+            "Deals_Damage"
+        ],
+        "hash": "5379f30c7628d312455ff99fc16267749431a707ff9e546f1ebe7f4a5f1a108e"
+    },
+    {
+        "title": "Leander",
+        "cost": 6,
+        "attack": 3,
+        "health": 1,
+        "keyword_abilities": [
+            "Reach",
+            "Defender"
+        ],
+        "special_abilities": [
+            "Deal_Damage"
+        ],
+        "triggers": [
+            "Takes_Damage"
+        ],
+        "hash": "1a9f3242d957d250964f827552b078267bf0be901d380e96713e7b6b584301fc"
+    },
+    {
+        "title": "Gwenore",
+        "cost": 4,
+        "attack": 1,
+        "health": 1,
+        "keyword_abilities": [
+            "Indestructible",
+            "Defender",
+            "Trample"
+        ],
+        "special_abilities": [],
+        "triggers": [],
+        "hash": "b8f4eb39e99d92abfe446c2464e09d82085e93b2f9ae68b10191ecfa7110624a"
+    },
+    {
+        "title": "Artemisia",
+        "cost": 6,
+        "attack": 2,
+        "health": 3,
+        "keyword_abilities": [],
+        "special_abilities": [
+            "Scry",
+            "Create_Treasure",
+            "Deal_Damage"
+        ],
+        "triggers": [
+            "Beginning_of_Endstep"
+        ],
+        "hash": "f2642ad51456f0a0ff3755f95bca83beb6e8632327be468a33d6fd498ece181a"
+    },
+    {
+        "title": "Astra",
+        "cost": 5,
+        "attack": 1,
+        "health": 4,
+        "keyword_abilities": [
+            "Reach"
+        ],
+        "special_abilities": [
+            "Destroy"
+        ],
+        "triggers": [
+            "Takes_Damage"
+        ],
+        "hash": "1d4cb09b2753550e2d2b815adcb76e79583c76fc8b16d0a66bf2287cbbcedaf1"
+    },
+    {
+        "title": "Adrienne",
+        "cost": 6,
+        "attack": 2,
+        "health": 2,
+        "keyword_abilities": [
+            "Flying",
+            "Protection"
+        ],
+        "special_abilities": [
+            "Create_Token_Creature",
+            "Scry"
+        ],
+        "triggers": [],
+        "hash": "db5717e84a05a6cc145a93ab2e1792ff055aa149d53eec0cf32b338770a599ec"
+    },
+    {
+        "title": "Aurelius",
+        "cost": 4,
+        "attack": 1,
+        "health": 4,
+        "keyword_abilities": [
+            "Vigilance",
+            "Defender"
+        ],
+        "special_abilities": [],
+        "triggers": [],
+        "hash": "f8bc9b9176b8112e7bf2563d012d8c63619188542e74cef76bfc4483bb26f4cf"
+    },
+    {
+        "title": "Evangeline",
+        "cost": 9,
+        "attack": 1,
+        "health": 2,
+        "keyword_abilities": [
+            "Indestructible",
+            "Flying",
+            "Menace",
+            "Reach"
+        ],
+        "special_abilities": [
+            "Scry",
+            "Create_Treasure"
+        ],
+        "triggers": [
+            "Beginning_of_Main",
+            "Beginning_of_Upkeep"
+        ],
+        "hash": "215f0886b1edbb776905369f9d4d99439b2614c5acf34a0bf320be49f30eea18"
+    },
+    {
+        "title": "Caitriona",
+        "cost": 10,
+        "attack": 1,
+        "health": 3,
+        "keyword_abilities": [
+            "Menace",
+            "Deathtouch",
+            "Intimidate",
+            "Prowess"
+        ],
+        "special_abilities": [
+            "Destroy",
+            "Gain_HP",
+            "Put_Marker_on"
+        ],
+        "triggers": [
+            "Attack"
+        ],
+        "hash": "e48fa50b296600b29ee04a379c8a9109d9e8a5d156db40290d162719d68e1c12"
+    },
+    {
+        "title": "Audrienne",
+        "cost": 6,
+        "attack": 5,
+        "health": 1,
+        "keyword_abilities": [],
+        "special_abilities": [
+            "Gain_HP",
+            "Destroy"
+        ],
+        "triggers": [
+            "Deals_Damage"
+        ],
+        "hash": "553e6f4c86774466be3119799bb066369060704b29c93f9a8d1efe8516d7e739"
+    },
+    {
+        "title": "Avalon",
+        "cost": 7,
+        "attack": 4,
+        "health": 1,
+        "keyword_abilities": [
+            "Menace",
+            "Vigilance",
+            "Lifelink"
+        ],
+        "special_abilities": [
+            "Deal_Damage"
+        ],
+        "triggers": [
+            "Deals_Damage_To_Player"
+        ],
+        "hash": "35d7ab1fb3f2e7ff4b4f0b5b11c399c7696741c41af8ec0aca3c33d5a7fa3328"
+    },
+    {
+        "title": "Caradoc",
+        "cost": 5,
+        "attack": 2,
+        "health": 1,
+        "keyword_abilities": [
+            "Trample",
+            "Lifelink"
+        ],
+        "special_abilities": [
+            "Mill"
+        ],
+        "triggers": [
+            "ETB"
+        ],
+        "hash": "8ce3ba1b89768bb9e7388485b07210f848b9540a13be863867a062445cc32e88"
+    }
+]

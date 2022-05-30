@@ -3,9 +3,11 @@ import json
 import os
 
 
-def fit_json(df):
+def format_df_for_json(df):
 
-    df.drop(labels=['Unnamed: 0', '# Keyword Abilities', '# Special Abilities', '# Triggers'], axis=1, inplace=True)
+    #df.drop(labels=['Unnamed: 0', '# Keyword Abilities', '# Special Abilities', '# Triggers'], axis=1, inplace=True)
+    df.drop(labels=['# Keyword Abilities', '# Special Abilities', '# Triggers'], axis=1, inplace=True)
+    
     df.rename(columns={"Name": "title",  
                        "Price": "cost",
                        "Power": "attack",
@@ -18,21 +20,14 @@ def fit_json(df):
     return df
 
 
-def main():
-
-    # find .csv files in current directory
-    csv_files = [f for f in os.listdir(PATH) if f.endswith('.csv')]
-
-    # read csv files
-    for csv_file in csv_files:
-        df = pd.read_csv(csv_file)
-        df = fit_json(df)
-        df.to_json(orient="table", index=False, path_or_buf=csv_file.replace('.csv', '.json'))
+def save_json(df):
+    
+    df = format_df_for_json(df)
+    df.to_json(orient="records", path_or_buf='cards.json')
         
     return
 
-if __name__ == "__main__":
-    PATH = r'C:\Users\m-wue\Desktop\Sors\NFT-game'
+# if __name__ == "__main__":
+#     PATH = r'C:\Users\m-wue\Desktop\Sors\NFT-game'
 
-    main()
-    
+#     main()
