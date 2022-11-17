@@ -42,7 +42,7 @@ def generate_cardnames():
 
     # read names.txt to have titles and inputs for cards
     names = []
-    with open('names.txt', 'r') as f:
+    with open(namesFile, 'r') as f:
         for line in f:
             names.append(line.strip())
 
@@ -230,7 +230,6 @@ def main():
             draw_artwork(card)
 
     print('Remaining cards: {}'.format(df_cards.shape[0]))
-    #df_cards.to_csv(f'cards_from_{nb_cards}.csv')
     save_json(df_cards)
     
     return
@@ -238,6 +237,7 @@ def main():
 
 if __name__ == '__main__':
 
+    namesFile = 'names_scifi.txt'
     nb_cards = 100
     plot = True
     draw = False

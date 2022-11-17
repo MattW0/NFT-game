@@ -26,8 +26,3 @@ def save_json(df):
     df.to_json(orient="records", path_or_buf='cards.json')
         
     return
-
-# if __name__ == "__main__":
-#     PATH = r'C:\Users\m-wue\Desktop\Sors\NFT-game'
-
-#     main()
