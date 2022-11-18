@@ -3,7 +3,6 @@ import math
 from numpy import NaN, nan
 import pandas as pd
 import random
-import matplotlib.pyplot as plt
 import plotly
 import plotly.express as px
 import plotly.graph_objects as go
@@ -23,17 +22,23 @@ from utils.csv_to_json import save_json
 
 def generate_encodings():
     # Card ability encodings
-    df = pd.DataFrame(columns=['Hex', 'Ability'])
     ids = [x for x in range(256)]
     hexs = [hex(x) for x in ids]
-    df['Hex'] = hexs
+    df = pd.DataFrame({'Hex': hexs})
+
+    shift_thg_pow = NB_THG_ENC + NB_POW_ENC
+
+    # Shifting by some amount each time to not have same byte encoding result in better stats
     df['Keyword Ability'] = pd.Series([e.name for e in KeywordAbilities])
-    # Shifting by NB_KW_ABILITIES to not have same byte encoding produce same abilities
+    df['Keyword Ability'] = df['Keyword Ability'].shift(shift_thg_pow)
+
     df['Special Ability'] = pd.Series([e.name for e in SpecialAbilities])
-    df['Special Ability'] = df['Special Ability'].shift(NB_KW_ABILITIES)
-    # Shifting again
+    df['Special Ability'] = df['Special Ability'].shift(shift_thg_pow + NB_KW_ABILITIES)
+
     df['Ability Trigger'] = pd.Series([e.name for e in AbilityTriggers])
-    df['Ability Trigger'] = df['Ability Trigger'].shift(NB_KW_ABILITIES + NB_SP_ABILITIES)
+    df['Ability Trigger'] = df['Ability Trigger'].shift(shift_thg_pow + NB_KW_ABILITIES + NB_SP_ABILITIES)
+
+    df.to_csv('Encodings/encodings.csv', index=False)
 
     return df
 
@@ -69,79 +74,77 @@ def build_cards(hashes, names, df_encoding):
     # Returns dataframe with hash to encodings comparison
 
     # Int for card
-    price_list = []         # in [0; price_enc]
-    power_list = []         # in [0; thg_enc]
-    toughness_list = []     # in [0; pow_enc]
+    prices = []         # in [0; price_enc]
+    toughnesses = []     # in [0; pow_enc]
+    powers = []         # in [0; thg_enc]
 
-    # Lists with number of abilities/triggers for easier data handling 
-    nb_kw_ab_list = []
-    nb_sp_ab_list = []
-    nb_trig_list = []
+    # Lists with number of abilities/triggers for easier data handling (used in draw artwork)
+    nb_kw_ab = []
+    nb_sp_ab = []
+    nb_trig = []
     # Lists with the abilities/triggers as defined in df_encodings
-    kw_ab_list = []
-    sp_ab_list = []
-    trig_list = []
+    keyword_abilities = []
+    special_abilities = []
+    triggers = []
 
     print('Generating cards...')
     for hash in tqdm(hashes):
         byte_array = bytearray.fromhex(hash)
         
-        power = 0
-        thoughness = 0
-        price = 0
-        kw_abilities = []
-        sp_abilities = []
-        triggers = []
+        card_power = 0
+        card_thoughness = 1
+        card_price = 0
+        card_kw_abilities = []
+        card_sp_abilities = []
+        card_triggers = []
 
-        for i, byte in enumerate(byte_array):
-            # Power, toughness and price bytes may appear anywhere in hash
-            # price += sum(df_encoding.index[:NB_PRICE_ENC] == byte)
-            thoughness += sum(df_encoding.index[NB_PRICE_ENC+1:NB_PRICE_ENC+NB_THG_ENC] == byte)
-            power += sum(df_encoding.index[NB_PRICE_ENC+NB_THG_ENC+1:NB_PRICE_ENC+NB_THG_ENC+NB_POW_ENC] == byte)
+        for byte in byte_array:
+            # Power, toughness increase when matched with one up to NB__ENC encoding bytes
+            card_thoughness += sum(df_encoding.index[:NB_THG_ENC] == byte)
+            card_power += sum(df_encoding.index[NB_THG_ENC+1:NB_THG_ENC+NB_POW_ENC] == byte)
 
-            # Card abilites
+            # Specific card abilites are added when the byte matches the exact encoding
             kw_ab = df_encoding.iloc[int(byte)]['Keyword Ability']
             if isinstance(kw_ab, str):
-                if not kw_ab in kw_abilities:
-                    kw_abilities.append(kw_ab)
+                if not kw_ab in card_kw_abilities:
+                    card_kw_abilities.append(kw_ab)
 
             sp_ab = df_encoding.iloc[int(byte)]['Special Ability']
             if isinstance(sp_ab, str):
-                if not sp_ab in sp_abilities:
-                    sp_abilities.append(sp_ab)
+                if not sp_ab in card_sp_abilities:
+                    card_sp_abilities.append(sp_ab)
             
             trig = df_encoding.iloc[int(byte)]['Ability Trigger']
             if isinstance(trig, str):
-                if not trig in triggers:
-                    triggers.append(trig)
+                if not trig in card_triggers:
+                    card_triggers.append(trig)
                     
-            price = math.floor((thoughness + power)/2 + len(kw_abilities) + len(sp_abilities) + len(triggers))
+            # TODO: Find function to make price have low mean, large variance and skewed to left (lots of cheaper cards and few expensive)
+            card_price = math.floor((card_thoughness + card_power)/3 + (len(card_kw_abilities) + len(card_sp_abilities) + len(card_triggers))*0.5)
 
-            # Ability bytes must appear at correct position to be valid
-            # if df_encoding.index[i] == byte:
-            #     abilities += 1
 
-        price_list.append(price)
-        power_list.append(power)
-        toughness_list.append(thoughness)
+        prices.append(card_price)
+        powers.append(card_power)
+        toughnesses.append(card_thoughness)
 
-        nb_kw_ab_list.append(len(kw_abilities))
-        kw_ab_list.append(kw_abilities)
-        nb_sp_ab_list.append(len(sp_abilities))
-        sp_ab_list.append(sp_abilities)
-        nb_trig_list.append(len(triggers))
-        trig_list.append(triggers)
+        keyword_abilities.append(card_kw_abilities)
+        special_abilities.append(card_sp_abilities)
+        triggers.append(card_triggers)
+        
+        nb_kw_ab.append(len(card_kw_abilities))
+        nb_sp_ab.append(len(card_sp_abilities))
+        nb_trig.append(len(card_triggers))
 
     df_cards = pd.DataFrame({'Name': names,
-                            'Price': price_list,
-                            'Power': power_list, 
-                            'Toughness': toughness_list, 
-                            '# Keyword Abilities': nb_kw_ab_list,
-                            '# Special Abilities': nb_sp_ab_list,
-                            '# Triggers': nb_trig_list,
-                            'Keyword Abilities': kw_ab_list,
-                            'Special Abilities': sp_ab_list,
-                            'Triggers': trig_list, 
+                            'Price': prices,
+                            'Power': powers, 
+                            'Toughness': toughnesses, 
+                            '# Keyword Abilities': nb_kw_ab,
+                            '# Special Abilities': nb_sp_ab,
+                            '# Triggers': nb_trig,
+                            'Keyword Abilities': keyword_abilities,
+                            'Special Abilities': special_abilities,
+                            'Triggers': triggers, 
                             'Hash': hashes})
 
     return df_cards
@@ -223,7 +226,7 @@ def main():
     if plot:
         plot_attribute_distribution(df_cards, nb_cards)
 
-    if draw:  
+    if make_artwork:  
         cards = df_cards.drop(labels=['Keyword Abilities', 'Special Abilities', 'Triggers'], axis=1)
         print('Generating artworks...')
         for _, card in tqdm(cards.iterrows()):
@@ -231,16 +234,19 @@ def main():
 
     print('Remaining cards: {}'.format(df_cards.shape[0]))
     save_json(df_cards)
+
+    print(df_cards.head(10))
+    df_cards.to_csv('cards.csv', index=False)
     
     return
 
 
 if __name__ == '__main__':
 
-    namesFile = 'names_scifi.txt'
-    nb_cards = 100
+    namesFile = r'.\Names\first_names.txt'
+    nb_cards = 1000
     plot = True
-    draw = False
+    make_artwork = False
 
     random.seed(0)
 
@@ -249,8 +255,8 @@ if __name__ == '__main__':
     NB_SP_ABILITIES = len(SpecialAbilities)
 
     # The higher nb encodings, the more likely byte matches are
-    NB_PRICE_ENC = 32
-    NB_THG_ENC = 16
-    NB_POW_ENC = 16  
+    # NB_PRICE_ENC = 32 --> price is calculated based on power, toughness and abilities
+    NB_THG_ENC = 24
+    NB_POW_ENC = 24  
     
     main()
