@@ -82,14 +82,15 @@ def middle_stamp(img_draw, sides_byte, base_color, stamp_size=200, stamp_outline
                            (WIDTH/2 + stamp_size, HEIGHT/2 + stamp_size)],
                            start, stop, fill=base_color, width=stamp_outline_width)
 
+        return img_draw
 
-    else:
-        if n_sides == 3:
-            stamp_outline_width += 0.3 * stamp_outline_width
-        outer_bound = (WIDTH/2, HEIGHT/2, stamp_size+stamp_outline_width)
-        inner_bound = (WIDTH/2, HEIGHT/2, stamp_size)
-        img_draw.regular_polygon(outer_bound, n_sides, rotation=0, fill=(0,0,0))
-        img_draw.regular_polygon(inner_bound, n_sides, rotation=0, fill=base_color)
+    # Polygon
+    if n_sides == 3:
+        stamp_outline_width += 0.3 * stamp_outline_width
+    outer_bound = (WIDTH/2, HEIGHT/2, stamp_size+stamp_outline_width)
+    inner_bound = (WIDTH/2, HEIGHT/2, stamp_size)
+    img_draw.regular_polygon(outer_bound, n_sides, rotation=0, fill=(0,0,0))
+    img_draw.regular_polygon(inner_bound, n_sides, rotation=0, fill=base_color)
 
     return img_draw
 
