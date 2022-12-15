@@ -15,21 +15,16 @@ def relate_triggers_and_special_abilities(df_cards):
     for card in df_cards.iterrows():
 
         card_texts = []
-        card_nb_relations = 0
 
         name = card[1]['Name']
         triggers = card[1]['Triggers']
         special_abilities = card[1]['Special Abilities']
 
-        nbTriggers = len(triggers)
-        nbSpecialAbilities = len(special_abilities)
-
-        if nbTriggers == 0 or nbSpecialAbilities == 0:
+        if len(triggers) == 0 or len(special_abilities) == 0:
             texts.append([])
             continue
 
         for sp_ab in special_abilities:
-            card_nb_relations += 1
             txt = construct_string(name, sp_ab, triggers)
             card_texts.append(txt)
 
@@ -38,6 +33,33 @@ def relate_triggers_and_special_abilities(df_cards):
     df_cards["Relations texts"] = texts
     df_cards["# Relations"] = [len(lst) for lst in texts]
 
+    return df_cards
+
+
+def evaluate_keywords(df_cards):
+
+    for card in df_cards.iterrows(): 
+
+        keywords = card[1]['Keyword Abilities']
+        for kw in keywords:
+            if (kw == 'Attacker'):
+                # check if attack > 0, if not drop ability
+                # Decrease price
+                pass
+            elif (kw == 'Defender'):
+                # Decrease price
+                pass
+            elif (kw == 'Indestructible'):
+                # Increase price 
+                pass
+            elif (kw == 'Vigilance'):
+                # check if attack > 0, if not decrease price
+                pass
+            elif (kw == 'Protection'):
+                # Protection from what?
+                # Maybe increase price
+                pass
+    
     return df_cards
 
 
