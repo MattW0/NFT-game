@@ -5,33 +5,35 @@ from Encodings.keyword_abilities import KeywordAbilities
 
 POISSON_DIST = list(np.random.poisson(0.5, 1000) + 1)
 MARKERS = [e.name for e in KeywordAbilities]
-MARKERS.append('+1/+1')
+
+# 1/3 chance of getting a +1/+1 marker instead of keyword marker
+for i in range(round(len(MARKERS)/3)):
+    MARKERS.append('+1/+1')
 
 
 def relate_triggers_and_special_abilities(df_cards):
     # Relates triggers to special abilities
     
+    relations = []
     texts = []
     for card in df_cards.iterrows():
-
-        card_texts = []
 
         name = card[1]['Name']
         triggers = card[1]['Triggers']
         special_abilities = card[1]['Special Abilities']
 
-        if len(triggers) == 0 or len(special_abilities) == 0:
-            texts.append([])
-            continue
+        card_relations = construct_relations(special_abilities, triggers)
+        relations.append(card_relations)
 
-        for sp_ab in special_abilities:
-            txt = construct_string(name, sp_ab, triggers)
-            card_texts.append(txt)
-
+        card_texts = []
+        for rel in card_relations:
+            text = construct_string(name, rel)
+            card_texts.append(text)
         texts.append(card_texts)
 
-    df_cards["Relations texts"] = texts
-    df_cards["# Relations"] = [len(lst) for lst in texts]
+    df_cards["Relations"] = relations
+    df_cards["# Relations"] = [len(lst) for lst in relations]
+    df_cards["Relation text"] = texts
 
     return df_cards
 
@@ -63,17 +65,32 @@ def evaluate_keywords(df_cards):
     return df_cards
 
 
+def construct_relations(special_abilities, triggers):
+    relations = []
+
+    if len(triggers) == 0 or len(special_abilities) == 0:
+        return []
+
+    for sp_ab in special_abilities:
+        relations.append({triggers[0]: sp_ab})
+        triggers.pop(0)
+        if len(triggers) == 0:
+            break
+
+    return relations
+
+
 # I should do the string construction in Unity but decide on special includes here (X, Marker, ..)
-def construct_string(name, sp_ab, triggers):
+def construct_string(name, relation):
     
     txt = ''
 
-    # get random special ability
-    trig = random.choice(triggers)
+    # Trigger
+    trig = list(relation.keys())[0]
     time, occurence = trig.split('_', 1)
     if (time == 'Beginning'):
         phase = occurence.split('_')[-1]
-        if (phase == 'Initiative'):
+        if (phase == 'initiative'):
             txt += 'When you gain the initiative, '
         else:
             txt += f'At the beginning of {phase}, '
@@ -81,15 +98,16 @@ def construct_string(name, sp_ab, triggers):
         occurence = occurence.replace('_', ' ')
         txt += f'{time} {name} {occurence}, '
 
-    
+    # Special Ability
+    sp_ab = list(relation.values())[0]
     if (sp_ab.__contains__('Marker')):
-        marker = random.choice(MARKERS)
+        marker = random.choice(MARKERS) # need to make this deterministic
         if (marker == '+1/+1'):
             sp_ab = sp_ab.replace('Marker', marker)
         else:
             sp_ab = sp_ab.replace('X_Marker', f'a_{marker}')
     if (sp_ab.__contains__('X')):
-        x = random.choice(POISSON_DIST)
+        x = random.choice(POISSON_DIST) # need to make this deterministic
         sp_ab = sp_ab.replace('X', str(x))
     
     sp_ab = sp_ab.replace('_', ' ')

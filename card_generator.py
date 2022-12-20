@@ -160,7 +160,7 @@ def price_cards(df_cards):
     prices = []
     for card in df_cards.iterrows():
         # _, Power, Toughness, points, # Keyword Abilities, # Special Abilities, # Triggers, _, _, _, _, _, # Relations
-        _, pow, thg, pts, kw, sp, tr, _, _, _, _, _, nb_rel = card[1]
+        _, pow, thg, pts, kw, sp, tr, _, _, _, _, _, nb_rel, _ = card[1]
 
         price = math.floor((thg + pow)/3 + kw*0.5 + nb_rel + pts)
         prices.append(price)
@@ -181,6 +181,8 @@ def main():
     df_cards = balance_cards(df_cards)
     df_cards = relate_triggers_and_special_abilities(df_cards)
     df_cards = evaluate_keywords(df_cards)
+    print(df_cards.shape)
+    print(df_cards.head(8))
     df_cards = price_cards(df_cards)
     print(df_cards.head(8))
 
@@ -207,9 +209,9 @@ if __name__ == '__main__':
 
     # Settings
     namesFile = r'.\Names\first_names.txt'
-    nb_cards = 50
+    nb_cards = 2000
     plot = True
-    make_artwork = True
+    make_artwork = False
     random.seed(0)
 
     NB_KW_ABILITIES = len(KeywordAbilities)
